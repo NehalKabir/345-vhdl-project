@@ -194,13 +194,79 @@ begin
 			end if;
 						
 		--long mult add high
-		elsif sel(22 downto 20) = "101" then		
+		elsif sel(22 downto 20) = "101" then
+			temp(63 downto 0) := std_logic_vector(resize(signed(reg2(63 downto 32)) * signed(reg3(63 downto 32)), 64));
+			temp(127 downto 64) := std_logic_vector(resize(signed(reg2(127 downto 96)) * signed(reg3(127 downto 96)), 64));
+			test1 <= temp;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 0)), 65) + resize(signed(temp(63 downto 0)), 65));
+			test2 <= temp_ext1;
+			ovflw := reg1(63) & temp(63) & temp_ext1(63);
+			if ovflw = "001" then
+				output(63 downto 0) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "110" then					 
+				output(63 downto 0) <= x"8000000000000000";
+			else
+				output(63 downto 0) <= std_logic_vector(resize(signed(temp_ext1), 64)) ;
+			end if;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 64)), 65) + resize(signed(temp(127 downto 64)), 65));
+			ovflw := reg1(127) & temp(127) & temp_ext1(63);
+			if ovflw = "001" then
+				output(127 downto 64) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "110" then					 
+				output(127 downto 64) <= x"8000000000000000";
+			else
+				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
+			end if;		
 			
 		--long mult sub low
-		elsif sel (22 downto 20 ) = "110" then 
+		elsif sel (22 downto 20 ) = "110" then
+			temp(63 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 0)) * signed(reg3(31 downto 0)), 64));
+			temp(127 downto 64) := std_logic_vector(resize(signed(reg2(95 downto 64)) * signed(reg3(95 downto 64)), 64));
+			test1 <= temp;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 0)), 65) - resize(signed(temp(63 downto 0)), 65));
+			test2 <= temp_ext1;
+			ovflw := reg1(63) & temp(63) & temp_ext1(63);
+			if ovflw = "011" then
+				output(63 downto 0) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "100" then					 
+				output(63 downto 0) <= x"8000000000000000";
+			else
+				output(63 downto 0) <= std_logic_vector(resize(signed(temp_ext1), 64)) ;
+			end if;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 64)), 65) - resize(signed(temp(127 downto 64)), 65));
+			ovflw := reg1(127) & temp(127) & temp_ext1(63);
+			if ovflw = "011" then
+				output(127 downto 64) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "100" then					 
+				output(127 downto 64) <= x"8000000000000000";
+			else
+				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
+			end if;
 		
 		--long int mult sub high--
 		elsif sel (22 downto 20 ) = "111" then
+			temp(63 downto 0) := std_logic_vector(resize(signed(reg2(63 downto 32)) * signed(reg3(63 downto 32)), 64));
+			temp(127 downto 64) := std_logic_vector(resize(signed(reg2(127 downto 96)) * signed(reg3(127 downto 96)), 64));
+			test1 <= temp;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 0)), 65) - resize(signed(temp(63 downto 0)), 65));
+			test2 <= temp_ext1;
+			ovflw := reg1(63) & temp(63) & temp_ext1(63);
+			if ovflw = "011" then
+				output(63 downto 0) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "100" then					 
+				output(63 downto 0) <= x"8000000000000000";
+			else
+				output(63 downto 0) <= std_logic_vector(resize(signed(temp_ext1), 64)) ;
+			end if;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 64)), 65) - resize(signed(temp(127 downto 64)), 65));
+			ovflw := reg1(127) & temp(127) & temp_ext1(63);
+			if ovflw = "011" then
+				output(127 downto 64) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "100" then					 
+				output(127 downto 64) <= x"8000000000000000";
+			else
+				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
+			end if;
 			
 		end if;--r4 end
 	
