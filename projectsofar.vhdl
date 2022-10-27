@@ -131,10 +131,43 @@ begin
 		end if; --r3 end  
 		
 	--load immediate
-	elsif sel (24) = '0' then
+	elsif sel (24) = '0' then		
+		--first 16	  
+		-- 0000000000000000 0
+		-- 0123456789012345	 1
+		-- 6789012345678901	  2
+		-- 2345678901234567	   3
+		-- 8901234567890123		4	  
+		-- 4567890123456789		 5 
+		-- 0123456789012345		  6	 
+		-- 6789012345678901		   7
+		-- 2345678901234567			8
 		
+		if sel (23 downto 21 ) = "000" then 
+			output(15 downto 0)  <= sel (20 downto 5); 	 
+		-- 2nd 16
+		elsif sel (23 downto 21 ) = "001" then 	
+			output (31 downto 16) <= sel (20 downto 5); 	 
+		--3rd 16
+		elsif sel (23 downto 21 ) = "010" then 
+			output (47 downto 32) <= sel (20 downto 5);	
+		-- 4th 16
+		elsif sel (23 downto 21 ) = "011" then 
+			output (63 downto 48) <= sel (20 downto 5);	
+		 --5th 16 
+		elsif sel (23 downto 21 ) = "100" then 	 
+			output 	(79 downto 64) <= sel (20 downto 5);
+		--6th 16 
+		elsif sel (23 downto 21 ) = "101" then 	  
+			output (95 downto 80) <= sel (20 downto 5);		
+		--7th 16
+		elsif sel (23 downto 21 ) = "110" then 
+			output	(111 downto 96) <= sel (20 downto 5);
+		--8th 16 
+		elsif sel (23 downto 21) = "111" then 
+			output (127 downto 112) <= sel (20 downto 5);
 		end if;
-	 
+	 end if;
 	  end process;
 
 end alu;
