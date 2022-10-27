@@ -80,41 +80,56 @@ begin
 		end if;--r4 end
 	
 		
-	 ---- r3 instructions--
+	 ---- r3 instructions-------------------------------------------------------------------
 	 elsif sel(24 downto 23) = "11" then 
-		 --nop
+		 --nop-------------------------------------------------------------------------
 		 if sel( 18 downto 15) = "0000"	 then 
-			 
+			 null;
 		--count leading 0 in words--
 		elsif sel( 18 downto 15) = "0010" then 
 		
 		--add word unsigned
 		elsif sel( 18 downto 15) = "0011" then 
 		
-		--add halfwors unsigned 
+		--add halfword unsigned 
 		elsif sel( 18 downto 15) = "0100" then
 			
-		--bitwise logic and
+		--bitwise logic and--------------------------------------------------------------
 		elsif sel( 18 downto 15) = "0101" then
-		
-			--broadcast word
+			  output <= reg1 and reg2;
+			--broadcast word -------------------------------------------------------------------
 		elsif sel( 18 downto 15) = "0110" then		
-		
+			output (31 downto 0) <= reg1( 31 downto 0);
+			output (63 downto 32) <= reg1(31 downto 0);
+			output (95 downto 64) <= reg1(31 downto 0);
+			output (127 downto 96) <= reg1 (31 downto 0);
 		--max signed word
 		elsif sel( 18 downto 15) = "0111" then 
 			
 		--min signed word
 		elsif sel( 18 downto 15) = "1000" then 
 		
-		--mult low unsigned 
-		elsif sel( 18 downto 15) = "1001" then 
+		--mult low unsigned -----------------------------------------------------------------------------------------------------------------
+		elsif sel( 18 downto 15) = "1001" then 	
+		  temp (31 downto 0) := std_logic_vector(resize(signed(reg1(15 downto 0)) * signed(reg2(15 downto 0)), 32));	
+		  temp (63 downto 32)  := std_logic_vector(resize(signed(reg1(47 downto 32)) * signed(reg2(47 downto 32)), 32));
+		  temp (95 downto 64)  := std_logic_vector(resize(signed(reg1(79 downto 64)) * signed(reg2(79 downto 64)), 32));
+		  temp (127 downto 96)  := std_logic_vector(resize(signed(reg1(111 downto 96)) * signed(reg2(111 downto 96)), 32));	
+		  
+		  output <= temp;
 		
 		--mult low by constant unsigned
-		elsif sel( 18 downto 15) = "1010" then 
+		elsif sel( 18 downto 15) = "1010" then 	
+		  temp (31 downto 0) := std_logic_vector(resize(signed(reg1(15 downto 0)) * signed(sel(14 downto 10)), 32));	
+		  temp (63 downto 32)  := std_logic_vector(resize(signed(reg1(47 downto 32)) * signed(sel(14 downto 10)), 32));
+		  temp (95 downto 64)  := std_logic_vector(resize(signed(reg1(79 downto 64)) * signed(sel(14 downto 10)), 32));
+		  temp (127 downto 96)  := std_logic_vector(resize(signed(reg1(111 downto 96)) * signed(sel(14 downto 10)), 32));	
+		  
+		  output <= temp;
 		
 		--OR
 		elsif sel( 18 downto 15) = "1011" then 
-			
+			  output<= reg1 or reg2;
 		--count ones in words
 		elsif sel( 18 downto 15) = "1100" then 
 		
