@@ -40,10 +40,14 @@ architecture alu of alu is
 signal sel : std_logic_vector (24 downto 0);
 signal r : std_logic_vector(1 downto 0);  
 signal op : std_logic_vector(2 downto 0);
+signal test1: std_logic_vector(127 downto 0);
+signal test2: std_logic_vector(64 downto 0);
 begin  
 	process(reg1, reg2, reg3)
 	variable temp : std_logic_vector (127 downto 0);
 	variable temp2 : std_logic_vector (127 downto 0);
+	variable temp_ext1: std_logic_vector(64 downto 0);
+	variable ovflw: std_logic_vector(2 downto 0);
 	begin 					 
 	op <= sel(22 downto 20);
 		--r4 instructions 
@@ -64,9 +68,26 @@ begin
 		elsif sel(22 downto 20) = "100" then 
 			temp(63 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 0)) * signed(reg3(31 downto 0)), 64));
 			temp(127 downto 64) := std_logic_vector(resize(signed(reg2(95 downto 64)) * signed(reg3(95 downto 64)), 64));
-			temp2(63 downto 0) := std_logic_vector(signed(reg1(63 downto 0)) + signed(temp(63 downto 0)));
-			temp2(127 downto 64) := std_logic_vector(signed(reg1(127 downto 64)) + signed(temp(127 downto 64)));
-			output <= temp2;
+			test1 <= temp;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 0)), 65) + resize(signed(temp(63 downto 0)), 65));
+			test2 <= temp_ext1;
+			ovflw := reg1(63) & temp(63) & temp_ext1(63);
+			if ovflw = "001" then
+				output(63 downto 0) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "110" then					 
+				output(63 downto 0) <= x"8000000000000000";
+			else
+				output(63 downto 0) <= std_logic_vector(resize(signed(temp_ext1), 64)) ;
+			end if;
+			temp_ext1(64 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 64)), 65) + resize(signed(temp(127 downto 64)), 65));
+			ovflw := reg1(127) & temp(127) & temp_ext1(63);
+			if ovflw = "001" then
+				output(127 downto 64) <= x"7FFFFFFFFFFFFFFF";
+			elsif ovflw = "110" then					 
+				output(127 downto 64) <= x"8000000000000000";
+			else
+				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
+			end if;
 						
 		--long mult add high
 		elsif sel(22 downto 20) = "101" then		
