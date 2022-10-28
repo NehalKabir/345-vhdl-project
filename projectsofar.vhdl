@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 --
--- Title       : half_adder
--- Design      : half_adder
--- Author      : Nehal Kabir
+-- Title       : ese 345 project part 1
+-- Design      : ese 345 project part 1
+-- Author      : Nehal Kabir and Thomas Plourde
 -- Company     : Stony Brook University
 --
 -------------------------------------------------------------------------------
