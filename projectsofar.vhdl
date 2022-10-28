@@ -277,13 +277,16 @@ begin
 		 if sel( 18 downto 15) = "0000"	 then 
 			 null;
 		--count leading 0 in words--
-		elsif sel( 18 downto 15) = "0010" then 
+		elsif sel( 18 downto 15) = "0001" then 
 		
 		--add word unsigned
-		elsif sel( 18 downto 15) = "0011" then 
+		elsif sel( 18 downto 15) = "0010" then 
 		
 		--add halfword unsigned 
-		elsif sel( 18 downto 15) = "0100" then
+		elsif sel( 18 downto 15) = "0011" then
+			
+		--add half ward saturated
+		elsif sel(18 downto 15) = "0100" then 
 			
 		--bitwise logic and--------------------------------------------------------------
 		elsif sel( 18 downto 15) = "0101" then
