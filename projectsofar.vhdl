@@ -56,6 +56,8 @@ begin
 	variable count2: std_logic_vector(31 downto 0);
 	variable count3: std_logic_vector(31 downto 0);
 	variable count4: std_logic_vector(31 downto 0);
+	variable temp_rotate: std_logic_vector(31 downto 0);
+	variable rOtate: integer;
 	begin 					 
 	op <= sel(22 downto 20);
 		--r4 instructions 
@@ -702,7 +704,31 @@ begin
 			output(127 downto 96) <= count; 
 		
 		--rotate bits in words
-		elsif sel( 18 downto 15) = "1101" then 
+		elsif sel( 18 downto 15) = "1101" then
+			rOtate := to_integer(unsigned(reg2(4 downto 0)));
+			temp_rotate := reg1(31 downto 0);
+			for i in 1 to rOtate loop
+				temp_rotate := temp_rotate(0) & temp_rotate(31 downto 1);
+			end loop;
+			output(31 downto 0) <= temp_rotate;
+			rOtate := to_integer(unsigned(reg2(36 downto 32)));
+			temp_rotate := reg1(63 downto 32);
+			for i in 1 to rOtate loop
+				temp_rotate := temp_rotate(0) & temp_rotate(31 downto 1);
+			end loop;
+			output(63 downto 32) <= temp_rotate;
+			rOtate := to_integer(unsigned(reg2(68 downto 64)));
+			temp_rotate := reg1(95 downto 64);
+			for i in 1 to rOtate loop
+				temp_rotate := temp_rotate(0) & temp_rotate(31 downto 1);
+			end loop;
+			output(95 downto 64) <= temp_rotate;
+			rOtate := to_integer(unsigned(reg2(100 downto 96)));
+			temp_rotate := reg1(127 downto 96);
+			for i in 1 to rOtate loop
+				temp_rotate := temp_rotate(0) & temp_rotate(31 downto 1);
+			end loop;
+			output(127 downto 96) <= temp_rotate;
 			
 		--sub from word unsiged 
 		elsif sel( 18 downto 15) = "1110" then
