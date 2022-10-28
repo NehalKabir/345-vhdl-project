@@ -52,6 +52,10 @@ begin
 	variable temp_ext2: std_logic_vector (32 downto 0);	--for r4
 	variable temp_ext3: std_logic_vector (16 downto 0);
 	variable ovflw: std_logic_vector(2 downto 0);
+	variable count: std_logic_vector(31 downto 0);
+	variable count2: std_logic_vector(31 downto 0);
+	variable count3: std_logic_vector(31 downto 0);
+	variable count4: std_logic_vector(31 downto 0);
 	begin 					 
 	op <= sel(22 downto 20);
 		--r4 instructions 
@@ -385,7 +389,89 @@ begin
 			 null;
 		--count leading 0 in words--
 		elsif sel( 18 downto 15) = "0001" then 
-		
+			count := "00000000000000000000000000000000"; 
+			count2 := "00000000000000000000000000000000"; 
+			count3 := "00000000000000000000000000000000"; 
+			count4 := "00000000000000000000000000000000"; 
+			
+			
+			if reg1(31 downto 0 ) = "00000000000000000000000000000000" then
+				output(31 downto 0) <= "00000000000000000000000001000000";
+			else
+				
+			for i in 0 to 31 loop
+				if reg1(i) = '1' then 
+					for j in i to 31 loop
+						if reg1(j) = '0' then
+							count :=std_logic_vector(unsigned(count) + "00000000000000000000000000000001");
+							
+						end if;	
+						end loop; 
+			
+				end if;
+			end loop;  
+			
+			output(31 downto 0) <= count(31 downto 0);
+			end if;	 
+			-------------------------------------------	  63 - 32
+			if reg1(63 downto 32 ) = "00000000000000000000000000000000" then
+				output(63 downto 32) <= "00000000000000000000000001000000";
+			else
+				
+			for i in 32 to 63 loop
+				if reg1(i) = '1' then 
+					for j in i to 63 loop
+						if reg1(j) = '0' then
+							count2 :=std_logic_vector(unsigned(count2) + "00000000000000000000000000000001");
+							
+						end if;	
+						end loop; 
+			
+				end if;
+			end loop;  
+			
+			output(63 downto 32) <= count2(31 downto 0);
+			end if;
+			
+			---------------------64 - 95
+			if reg1(95 downto 64 ) = "00000000000000000000000000000000" then
+				output(95 downto 64) <= "00000000000000000000000001000000";
+			else
+				
+			for i in 64 to 95 loop
+				if reg1(i) = '1' then 
+					for j in i to 95 loop
+						if reg1(j) = '0' then
+							count3 :=std_logic_vector(unsigned(count3) + "00000000000000000000000000000001");
+							
+						end if;	
+						end loop; 
+			
+				end if;
+			end loop;  
+			
+			output(95 downto 64) <= count3(31 downto 0);
+			end if;		  
+			
+			--127 - 96	
+			if reg1(127 downto 96 ) = "00000000000000000000000000000000" then
+				output(127 downto 96) <= "00000000000000000000000001000000";
+			else
+				
+			for i in 64 to 96 loop
+				if reg1(i) = '1' then 
+					for j in i to 96 loop
+						if reg1(j) = '0' then
+							count4 :=std_logic_vector(unsigned(count4) + "00000000000000000000000000000001");
+							
+						end if;	
+						end loop; 
+			
+				end if;
+			end loop;  
+			
+			output(127 downto 96) <= count4(31 downto 0);
+			end if;
 		--add word unsigned
 		elsif sel( 18 downto 15) = "0010" then 
 			temp(31 downto 0) := std_logic_vector(resize(unsigned(reg2(31 downto 0)) + unsigned(reg1(31 downto 0)), 32));
