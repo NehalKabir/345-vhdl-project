@@ -518,10 +518,50 @@ begin
 			output (95 downto 64) <= reg1(31 downto 0);
 			output (127 downto 96) <= reg1 (31 downto 0);
 		--max signed word
-		elsif sel( 18 downto 15) = "0111" then 
+		elsif sel( 18 downto 15) = "0111" then
+			if(signed(reg2(31 downto 0)) < signed(reg1(31 downto 0))) then
+				output(31 downto 0) <= reg1(31 downto 0);
+			else
+				output(31 downto 0) <= reg2(31 downto 0);
+			end if;	
+			if(signed(reg2(63 downto 32)) < signed(reg1(63 downto 32))) then
+				output(63 downto 32) <= reg1(63 downto 32);
+			else
+				output(63 downto 32) <= reg2(63 downto 32);
+			end if;	
+			if(signed(reg2(95 downto 64)) < signed(reg1(95 downto 64))) then
+				output(95 downto 64) <= reg1(95 downto 64);
+			else
+				output(95 downto 64) <= reg2(95 downto 64);
+			end if;	
+			if(signed(reg2(127 downto 96)) < signed(reg1(127 downto 96))) then
+				output(127 downto 96) <= reg1(127 downto 96);
+			else
+				output(127 downto 96) <= reg2(127 downto 96);
+			end if;	
 			
 		--min signed word
-		elsif sel( 18 downto 15) = "1000" then 
+		elsif sel( 19 downto 15) = "01000" then
+			if(signed(reg2(31 downto 0)) > signed(reg1(31 downto 0))) then
+				output(31 downto 0) <= reg1(31 downto 0);
+			else
+				output(31 downto 0) <= reg2(31 downto 0);
+			end if;	
+			if(signed(reg2(63 downto 32)) > signed(reg1(63 downto 32))) then
+				output(63 downto 32) <= reg1(63 downto 32);
+			else
+				output(63 downto 32) <= reg2(63 downto 32);
+			end if;	
+			if(signed(reg2(95 downto 64)) > signed(reg1(95 downto 64))) then
+				output(95 downto 64) <= reg1(95 downto 64);
+			else
+				output(95 downto 64) <= reg2(95 downto 64);
+			end if;	
+			if(signed(reg2(127 downto 96)) > signed(reg1(127 downto 96))) then
+				output(127 downto 96) <= reg1(127 downto 96);
+			else
+				output(127 downto 96) <= reg2(127 downto 96);
+			end if;
 		
 		--mult low unsigned -----------------------------------------------------------------------------------------------------------------
 		elsif sel( 18 downto 15) = "1001" then 	
@@ -545,7 +585,35 @@ begin
 		elsif sel( 18 downto 15) = "1011" then 
 			  output<= reg1 or reg2;
 		--count ones in words
-		elsif sel( 18 downto 15) = "1100" then 
+		elsif sel( 18 downto 15) = "1100" then
+			count := x"00000000";
+			for i in 0 to 31 loop
+				if(reg1(i) = '1') then
+					count := std_logic_vector(unsigned(count) + 1);
+				end if;	
+			end loop;
+			output(31 downto 0) <= count;
+			count := x"00000000";
+			for i in 32 to 63 loop
+				if(reg1(i) = '1') then
+					count := std_logic_vector(unsigned(count) + 1);
+				end if;	
+			end loop;
+			output(63 downto 32) <= count;
+			count := x"00000000";
+			for i in 64 to 95 loop
+				if(reg1(i) = '1') then
+					count := std_logic_vector(unsigned(count) + 1);
+				end if;	
+			end loop;
+			output(95 downto 64) <= count;
+			count := x"00000000";
+			for i in 96 to 127 loop
+				if(reg1(i) = '1') then
+					count := std_logic_vector(unsigned(count) + 1);
+				end if;	
+			end loop;
+			output(127 downto 96) <= count; 
 		
 		--rotate bits in words
 		elsif sel( 18 downto 15) = "1101" then 
