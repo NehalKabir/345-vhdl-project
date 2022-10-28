@@ -43,12 +43,14 @@ signal op : std_logic_vector(2 downto 0);
 signal test1: std_logic_vector(127 downto 0);
 signal test2: std_logic_vector(64 downto 0);
 signal test3 :std_logic_vector(32 downto 0);		--for r4 000 - 011
+signal test4 :std_logic_vector(16 downto 0);
 begin  
 	process(reg1, reg2, reg3)
 	variable temp : std_logic_vector (127 downto 0);
 	variable temp2 : std_logic_vector (127 downto 0);
 	variable temp_ext1: std_logic_vector(64 downto 0);
 	variable temp_ext2: std_logic_vector (32 downto 0);	--for r4
+	variable temp_ext3: std_logic_vector (16 downto 0);
 	variable ovflw: std_logic_vector(2 downto 0);
 	begin 					 
 	op <= sel(22 downto 20);
@@ -163,11 +165,116 @@ begin
 				output(127 downto 96) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
 			end if;
 		--mult sub low
-		elsif sel(22 downto 20) = "010"	 then 	 
+		elsif sel(22 downto 20) = "010"	 then
+			temp (31 downto 0) := std_logic_vector(resize(signed(reg2(15 downto 0)) * signed(reg3(15 downto 0)), 32));	
+		  temp (63 downto 32)  := std_logic_vector(resize(signed(reg2(47 downto 32)) * signed(reg3(47 downto 32)), 32));
+		  temp (95 downto 64)  := std_logic_vector(resize(signed(reg2(79 downto 64)) * signed(reg3(79 downto 64)), 32));
+		  temp (127 downto 96)  := std_logic_vector(resize(signed(reg2(111 downto 96)) * signed(reg3(111 downto 96)), 32));	
+		  
+		  
+		   test1 <= temp;
+		  -- 0 -31
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(31 downto 0)), 33) - resize(signed(temp(31 downto 0)), 33));
+		  test3 <= temp_ext2;
+		  ovflw := reg1(31) & temp(31) & temp_ext2(31);
+		  	if ovflw = "011" then
+				output(31 downto 0) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(31 downto 0) <= x"80000000";
+			else
+				output(31 downto 0) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  -- 32 - 63
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 32)), 33) - resize(signed(temp(63 downto 32)), 33));
+		  test3 <= temp_ext2;
+		  ovflw := reg1 (63) & temp(63) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(63 downto 32) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(63 downto 32) <= x"80000000";
+			else
+				output(63 downto 32) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  
+		  -- 95 - 64
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(95 downto 64)), 33) - resize(signed(temp(95 downto 64)), 33));
+		  	   test3 <= temp_ext2;
+		  ovflw := reg1 (95) & temp(95) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(95 downto 64) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(95 downto 64) <= x"80000000";
+			else
+				output(95 downto 64) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  
+		   -- 127 - 96
+		   temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 96)), 33) - resize(signed(temp(127 downto 96)), 33));
+		  	   test3 <= temp_ext2;
+		  ovflw := reg1 (127) & temp(127) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(127 downto 96) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(127 downto 96) <= x"80000000";
+			else
+				output(127 downto 96) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
 		
 		--mult sub high
 		elsif sel (22 downto 20) = "011" then 
-			
+			temp (31 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 16)) * signed(reg3(31 downto 16)), 32));	
+		  temp (63 downto 32)  := std_logic_vector(resize(signed(reg2(63 downto 48)) * signed(reg3(63 downto 48)), 32));
+		  temp (95 downto 64)  := std_logic_vector(resize(signed(reg2(95 downto 80)) * signed(reg3(95 downto 80)), 32));
+		  temp (127 downto 96)  := std_logic_vector(resize(signed(reg2(127 downto 112)) * signed(reg3(127 downto 112)), 32));	
+		  
+		   test1 <= temp;
+		  -- 0 -31
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(31 downto 0)), 33) - resize(signed(temp(31 downto 0)), 33));
+		  test3 <= temp_ext2;
+		  ovflw := reg1(31) & temp(31) & temp_ext2(31);
+		  	if ovflw = "011" then
+				output(31 downto 0) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(31 downto 0) <= x"80000000";
+			else
+				output(31 downto 0) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  -- 32 - 63
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 32)), 33) - resize(signed(temp(63 downto 32)), 33));
+		  test3 <= temp_ext2;
+		  ovflw := reg1 (63) & temp(63) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(63 downto 32) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(63 downto 32) <= x"80000000";
+			else
+				output(63 downto 32) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  
+		  -- 95 - 64
+		  temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(95 downto 64)), 33) - resize(signed(temp(95 downto 64)), 33));
+		  	   test3 <= temp_ext2;
+		  ovflw := reg1 (95) & temp(95) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(95 downto 64) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(95 downto 64) <= x"80000000";
+			else
+				output(95 downto 64) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+		  
+		   -- 127 - 96
+		   temp_ext2 (32 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 96)), 33) - resize(signed(temp(127 downto 96)), 33));
+		  	   test3 <= temp_ext2;
+		  ovflw := reg1 (127) & temp(127) & temp_ext2(31);
+		  	  if ovflw = "011" then
+				output(127 downto 96) <= x"7FFFFFFF";
+			elsif ovflw = "100" then					 
+				output(127 downto 96) <= x"80000000";
+			else
+				output(127 downto 96) <= std_logic_vector(resize(signed(temp_ext2), 32)) ;
+			end if;
+				
 		--long int mult add low
 		elsif sel(22 downto 20) = "100" then 
 			temp(63 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 0)) * signed(reg3(31 downto 0)), 64));
@@ -281,13 +388,126 @@ begin
 		
 		--add word unsigned
 		elsif sel( 18 downto 15) = "0010" then 
+			temp(31 downto 0) := std_logic_vector(resize(unsigned(reg2(31 downto 0)) + unsigned(reg1(31 downto 0)), 32));
+			 temp(63 downto 32) := std_logic_vector(resize(unsigned(reg2(63 downto 32)) + unsigned(reg1(63 downto 32)), 32));
+			 temp(95 downto 64) := std_logic_vector(resize(unsigned(reg2(95 downto 64)) + unsigned(reg1(95 downto 64)), 32));
+			 temp(127 downto 96) := std_logic_vector(resize(unsigned(reg2(127 downto 96)) + unsigned(reg1(127 downto 96)), 32));
 		
+			output <= temp;
 		--add halfword unsigned 
 		elsif sel( 18 downto 15) = "0011" then
+			temp(15 downto 0)  := std_logic_vector(resize(unsigned(reg2(15 downto 0)) + unsigned(reg1(15 downto 0)), 16));
+			 temp(31 downto 16) := std_logic_vector(resize(unsigned(reg2(31 downto 16)) + unsigned(reg1(31 downto 16)), 16));
+			 temp(47 downto 32) := std_logic_vector(resize(unsigned(reg2(47 downto 32)) + unsigned(reg1(47 downto 32)), 16));
+			 temp(63 downto 48):= std_logic_vector(resize(unsigned(reg2(63 downto 48)) + unsigned(reg1(63 downto 48)), 16));
+			 
+			 temp(79 downto 64) := std_logic_vector(resize(unsigned(reg2(79 downto 64)) + unsigned(reg1(79 downto 64)), 16));
+			 temp(95 downto 80) := std_logic_vector(resize(unsigned(reg2(95 downto 80)) + unsigned(reg1(95 downto 80)), 16));
+			 temp(111 downto 96) := std_logic_vector(resize(unsigned(reg2(111 downto 96)) + unsigned(reg1(111 downto 96)), 16));
+			 temp(127 downto 112):= std_logic_vector(resize(unsigned(reg2(127 downto 112)) + unsigned(reg1(127 downto 112)), 16));
+		
 			
+			output <= temp;
+
 		--add half ward saturated
 		elsif sel(18 downto 15) = "0100" then 
+			-- 0 -16
+		  temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(15 downto 0)), 17) - resize(signed(reg2(15 downto 0)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1(15) & reg2(15) & temp_ext3(15);
+		  	if ovflw = "001" then
+				output(15 downto 0) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(15 downto 0) <= x"8000";
+			else
+				output(15 downto 0) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+		  -- 16 - 31
+		  temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(31 downto 16)), 17) - resize(signed(reg2(31 downto 16)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (31) & reg2(31) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(31 downto 16) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(31 downto 16) <= x"8000";
+			else
+				output(31 downto 16) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+		  
+		  -- 32 - 47
+		  temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(47 downto 32)), 17) - resize(signed(reg2(47 downto 32)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (47) & reg2(47) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(47 downto 32) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(47 downto 32) <= x"8000";
+			else
+				output(47 downto 32) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+		  
+		   -- 48 - 63
+		   temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(63 downto 48)), 17) - resize(signed(reg2(63 downto 48)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (63) & reg2(63) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(63 downto 48) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(63 downto 48) <= x"8000";
+			else
+				output(63 downto 48) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;	   
 			
+			--64 - 79
+		  temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(79 downto 64)), 17) - resize(signed(reg2(79 downto 64)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (79) & reg2(79) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(79 downto 64) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(79 downto 64) <= x"8000";
+			else
+				output(79 downto 64) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+			
+			
+			
+			--80 - 95 
+			temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(95 downto 80)), 17) - resize(signed(reg2(95 downto 80)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (95) & reg2(95) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(95 downto 80) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(95 downto 80) <= x"8000";
+			else
+				output(95 downto 80) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+			
+			--96 - 111
+			temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(111 downto 96)), 17) - resize(signed(reg2(111 downto 96)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (111) & reg2(111) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(111 downto 96) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(111 downto 96) <= x"8000";
+			else
+				output(111 downto 96) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+			
+			--112- 127
+			temp_ext3 (16 downto 0) := std_logic_vector(resize(signed(reg1(127 downto 112)), 17) - resize(signed(reg2(127 downto 112)), 17));
+		  test4 <= temp_ext3;
+		  ovflw := reg1 (127) & reg2(127) & temp_ext3(15);
+		  	  if ovflw = "001" then
+				output(127 downto 112) <= x"7FFF";
+			elsif ovflw = "110" then					 
+				output(127 downto 112) <= x"8000";
+			else
+				output(127 downto 112) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
+			end if;
+				
 		--bitwise logic and--------------------------------------------------------------
 		elsif sel( 18 downto 15) = "0101" then
 			  output <= reg1 and reg2;
@@ -342,15 +562,15 @@ begin
 	--load immediate
 	elsif sel (24) = '0' then		
 		--first 16	  
-		-- 0000000000000000 0
+		-- 0000000000000000     0
 		-- 0123456789012345	 1
 		-- 6789012345678901	  2
 		-- 2345678901234567	   3
-		-- 8901234567890123		4	  
-		-- 4567890123456789		 5 
-		-- 0123456789012345		  6	 
-		-- 6789012345678901		   7
-		-- 2345678901234567			8
+		-- 8901234567890123	    4	  
+		-- 4567890123456789	     5 
+		-- 0123456789012345	      6	 
+		-- 6789012345678901	       7
+		-- 2345678901234567		8
 		
 		if sel (23 downto 21 ) = "000" then 
 			output(15 downto 0)  <= sel (20 downto 5); 	 
