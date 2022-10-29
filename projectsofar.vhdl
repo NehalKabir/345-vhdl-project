@@ -740,78 +740,81 @@ begin
 			
 		--sub from halfwarod saturated
 		elsif sel( 18 downto 15) = "1111" then 
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(15 downto 0)), 17) - resize(signed(reg1(15 downto 0)), 17));
-			ovflw := reg2(15) & reg1(15) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(15 downto 0)), 17) - resize(signed(reg1(15 downto 0)), 17));
+			ovflw := reg2(15) & reg1(15) & temp_ext3(15);
 			if ovflw = "011" then
 				output(15 downto 0) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(15 downto 0) <= x"8000";
 			else
-				output(15 downto 0) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(15 downto 0) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 16)), 17) - resize(signed(reg1(31 downto 16)), 17));
-			ovflw := reg2(31) & reg1(31) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(31 downto 16)), 17) - resize(signed(reg1(31 downto 16)), 17));
+			ovflw := reg2(31) & reg1(31) & temp_ext3(15);
 			if ovflw = "011" then
 				output(31 downto 16) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(31 downto 16) <= x"8000";
 			else
-				output(31 downto 16) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(31 downto 16) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(47 downto 32)), 17) - resize(signed(reg1(47 downto 32)), 17));
-			ovflw := reg2(47) & reg1(47) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(47 downto 32)), 17) - resize(signed(reg1(47 downto 32)), 17));
+			ovflw := reg2(47) & reg1(47) & temp_ext3(15);
 			if ovflw = "011" then
 				output(47 downto 32) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(47 downto 32) <= x"8000";
 			else
-				output(47 downto 32) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;
+				output(47 downto 32) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(63 downto 48)), 17) - resize(signed(reg1(63 downto 48)), 17));
-			ovflw := reg2(63) & reg1(63) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(63 downto 48)), 17) - resize(signed(reg1(63 downto 48)), 17));
+			ovflw := reg2(63) & reg1(63) & temp_ext3(15);
 			if ovflw = "011" then
 				output(63 downto 48) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(63 downto 48) <= x"8000";
 			else
-				output(63 downto 48) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(63 downto 48) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(79 downto 64)), 17) - resize(signed(reg1(79 downto 64)), 17));
-			ovflw := reg2(79) & reg1(79) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(79 downto 64)), 17) - resize(signed(reg1(79 downto 64)), 17));
+			ovflw := reg2(79) & reg1(79) & temp_ext3(15);
 			if ovflw = "011" then
 				output(79 downto 64) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(79 downto 64) <= x"8000";
 			else
-				output(79 downto 64) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(79 downto 64) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(95 downto 80)), 17) - resize(signed(reg1(95 downto 80)), 17));
-			ovflw := reg2(95) & reg1(95) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(95 downto 80)), 17) - resize(signed(reg1(95 downto 80)), 17));
+			ovflw := reg2(95) & reg1(95) & temp_ext3(15);
 			if ovflw = "011" then
 				output(95 downto 80) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(95 downto 80) <= x"8000";
 			else
-				output(95 downto 80) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(95 downto 80) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(111 downto 96)), 17) - resize(signed(reg1(111 downto 96)), 17));
-			ovflw := reg2(111) & reg1(111) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(111 downto 96)), 17) - resize(signed(reg1(111 downto 96)), 17));
+			ovflw := reg2(111) & reg1(111) & temp_ext3(15);
 			if ovflw = "011" then
 				output(111 downto 96) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(111 downto 96) <= x"8000";
 			else
-				output(111 downto 96) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(111 downto 96) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
-			temp_ext2(16 downto 0) := std_logic_vector(resize(signed(reg2(127 downto 112)), 17) - resize(signed(reg1(127 downto 112)), 17));
-			ovflw := reg2(127) & reg1(127) & temp_ext1(15);
+			temp_ext3(16 downto 0) := std_logic_vector(resize(signed(reg2(127 downto 112)), 17) - resize(signed(reg1(127 downto 112)), 17));
+			ovflw := reg2(127) & reg1(127) & temp_ext3(15);
 			if ovflw = "011" then
 				output(127 downto 112) <= x"7FFF";
 			elsif ovflw = "100" then					 
 				output(127 downto 112) <= x"8000";
 			else
-				output(127 downto 112) <= std_logic_vector(resize(signed(temp_ext2), 16)) ;	
+				output(127 downto 112) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
+			
+		 
+		end if; --r3 end  
 			
 		 
 		end if; --r3 end  
