@@ -409,7 +409,7 @@ begin
 							
 						end if;	
 						end loop; 
-			
+						exit;
 				end if;
 			end loop;  
 			
@@ -428,7 +428,7 @@ begin
 							
 						end if;	
 						end loop; 
-			
+					exit;
 				end if;
 			end loop;  
 			
@@ -448,7 +448,7 @@ begin
 							
 						end if;	
 						end loop; 
-			
+						exit;
 				end if;
 			end loop;  
 			
@@ -468,7 +468,7 @@ begin
 							
 						end if;	
 						end loop; 
-			
+						exit;
 				end if;
 			end loop;  
 			
