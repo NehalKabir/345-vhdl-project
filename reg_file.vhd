@@ -27,38 +27,6 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 entity reg_file is
 	 port(
-	  reg1 :in std_logic_vector (127 downto 0);  
-	 reg2 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg4 :in std_logic_vector (127 downto 0);
-	 reg5 :in std_logic_vector (127 downto 0);
-	 reg6 :in std_logic_vector (127 downto 0);
-	 reg7 :in std_logic_vector (127 downto 0);
-	 reg8 :in std_logic_vector (127 downto 0);
-	 reg9 :in std_logic_vector (127 downto 0);
-	 reg10 :in std_logic_vector (127 downto 0);
-	 reg11 :in std_logic_vector (127 downto 0);
-	 reg12 :in std_logic_vector (127 downto 0);
-	 reg13 :in std_logic_vector (127 downto 0);
-	 reg14 :in std_logic_vector (127 downto 0);
-	 reg15 :in std_logic_vector (127 downto 0);
-	 reg16 :in std_logic_vector (127 downto 0);
-	 reg17 :in std_logic_vector (127 downto 0);
-	 reg18 :in std_logic_vector (127 downto 0);
-	 reg19 :in std_logic_vector (127 downto 0);
-	 reg20 :in std_logic_vector (127 downto 0);
-	 reg21 :in std_logic_vector (127 downto 0);
-	 reg22 :in std_logic_vector (127 downto 0);
-	 reg23 :in std_logic_vector (127 downto 0);
-	 reg24 :in std_logic_vector (127 downto 0);
-	 reg25 :in std_logic_vector (127 downto 0);
-	 reg26 :in std_logic_vector (127 downto 0);
-	 reg27 :in std_logic_vector (127 downto 0);
-	 reg28 :in std_logic_vector (127 downto 0);
-	 reg29 :in std_logic_vector (127 downto 0);
-	 reg30 :in std_logic_vector (127 downto 0);
-	 reg31 :in std_logic_vector (127 downto 0);
-	 reg32 :in std_logic_vector (127 downto 0);
 
 	 write_reg :in std_logic_vector (127 downto 0);
 	 
@@ -72,9 +40,28 @@ end reg_file;
 --}} End of automatically maintained section
 
 architecture reg_file of reg_file is
+type std_logic_aoa is array (0 to 31) of std_logic_vector(127 downto 0);
 signal write: std_logic;
+signal read1: integer;
+signal read2: integer;
+signal read3: integer;
+signal regs : std_logic_aoa;
+
 begin
 
-	 -- enter your statements here --
-
+	process(clk)
+	begin
+		if(rising_edge(clk)) then
+			if(0 <= read1 and read1 <= 31) then
+				output1 <= regs(read1)(127 downto 0);
+			end if;
+			if(0 <= read2 and read2 <= 31) then
+				output2 <= regs(read1)(127 downto 0);
+			end if;
+			if(0 <= read3 and read3 <= 31) then
+				output3 <= regs(read3)(127 downto 0);
+			end if;
+		end if;
+	end process;
+	
 end reg_file;
