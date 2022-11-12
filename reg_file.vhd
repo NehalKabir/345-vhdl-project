@@ -49,17 +49,20 @@ signal regs : std_logic_aoa;
 
 begin
 
-	process(clk)
+		process(clk)
 	begin
 		if(rising_edge(clk)) then
 			if(0 <= read1 and read1 <= 31) then
 				output1 <= regs(read1)(127 downto 0);
 			end if;
 			if(0 <= read2 and read2 <= 31) then
-				output2 <= regs(read1)(127 downto 0);
+				output2 <= regs(read2)(127 downto 0);
 			end if;
 			if(0 <= read3 and read3 <= 31) then
 				output3 <= regs(read3)(127 downto 0);
+			end if;
+			if(write = '1') then
+				regs(write_to) <= write_reg;
 			end if;
 		end if;
 	end process;
