@@ -27,7 +27,7 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 entity reg_file is
 	 port(
-	 reg1 :in std_logic_vector (127 downto 0);  
+	  reg1 :in std_logic_vector (127 downto 0);  
 	 reg2 :in std_logic_vector (127 downto 0);
 	 reg3 :in std_logic_vector (127 downto 0);
 	 reg4 :in std_logic_vector (127 downto 0);
@@ -41,24 +41,24 @@ entity reg_file is
 	 reg12 :in std_logic_vector (127 downto 0);
 	 reg13 :in std_logic_vector (127 downto 0);
 	 reg14 :in std_logic_vector (127 downto 0);
-	 reg1 :in std_logic_vector (127 downto 0);
-	 reg1 :in std_logic_vector (127 downto 0);
-	 reg1 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
-	 reg3 :in std_logic_vector (127 downto 0);
+	 reg15 :in std_logic_vector (127 downto 0);
+	 reg16 :in std_logic_vector (127 downto 0);
+	 reg17 :in std_logic_vector (127 downto 0);
+	 reg18 :in std_logic_vector (127 downto 0);
+	 reg19 :in std_logic_vector (127 downto 0);
+	 reg20 :in std_logic_vector (127 downto 0);
+	 reg21 :in std_logic_vector (127 downto 0);
+	 reg22 :in std_logic_vector (127 downto 0);
+	 reg23 :in std_logic_vector (127 downto 0);
+	 reg24 :in std_logic_vector (127 downto 0);
+	 reg25 :in std_logic_vector (127 downto 0);
+	 reg26 :in std_logic_vector (127 downto 0);
+	 reg27 :in std_logic_vector (127 downto 0);
+	 reg28 :in std_logic_vector (127 downto 0);
+	 reg29 :in std_logic_vector (127 downto 0);
+	 reg30 :in std_logic_vector (127 downto 0);
+	 reg31 :in std_logic_vector (127 downto 0);
+	 reg32 :in std_logic_vector (127 downto 0);
 
 	 write_reg :in std_logic_vector (127 downto 0);
 	 
