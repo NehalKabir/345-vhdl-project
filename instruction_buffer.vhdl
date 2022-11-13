@@ -28,6 +28,8 @@ use IEEE.numeric_std.all;
 
 entity instruction_buffer is
 port(
+	clk : in std_logic;
+	
 	r1 :in std_logic_vector (24 downto 0);	  
 	r2 :in std_logic_vector (24 downto 0);
 	r3 :in std_logic_vector (24 downto 0);
@@ -97,7 +99,10 @@ port(
 	r61 :in std_logic_vector (24 downto 0);	  
 	r62 :in std_logic_vector (24 downto 0);
 	r63 :in std_logic_vector (24 downto 0);
-	r64 :in std_logic_vector (24 downto 0);	
+	r64 :in std_logic_vector (24 downto 0);
+	
+	PC :in integer;
+	
 	output : out std_logic_vector (24 downto 0)
 	);
 end instruction_buffer;
