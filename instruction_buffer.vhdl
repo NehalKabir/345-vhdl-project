@@ -105,8 +105,15 @@ end instruction_buffer;
 --}} End of automatically maintained section
 
 architecture instruction_buffer of instruction_buffer is
+type std_logic_aoa is array (0 to 63) of std_logic_vector(24 downto 0);
+signal regs : std_logic_aoa;
 begin
-
-	 -- enter your statements here --
-
+	
+	process(clk)
+	begin
+		if(rising_edge(clk)) then
+			output <= regs(PC);
+		end if;
+	end process;
+	
 end instruction_buffer;
