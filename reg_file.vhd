@@ -27,8 +27,16 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 entity reg_file is
 	 port(
-
+	 
+	 clk: in std_logic;
+	 
 	 write_reg :in std_logic_vector (127 downto 0);
+	 
+	 read1:in integer;
+	 read2:in integer;
+	 read3:in integer;
+	 
+	 write:in std_logic;
 	 
 	 output1 : out std_logic_vector (127 downto 0);
 	 output2 : out std_logic_vector (127 downto 0);
@@ -41,15 +49,12 @@ end reg_file;
 
 architecture reg_file of reg_file is
 type std_logic_aoa is array (0 to 31) of std_logic_vector(127 downto 0);
-signal write: std_logic;
-signal read1: integer;
-signal read2: integer;
-signal read3: integer;
+signal write_to: integer;
 signal regs : std_logic_aoa;
 
 begin
 
-		process(clk)
+	process(clk)
 	begin
 		if(rising_edge(clk)) then
 			if(0 <= read1 and read1 <= 31) then
