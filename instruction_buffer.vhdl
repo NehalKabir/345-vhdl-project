@@ -27,6 +27,7 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity instruction_buffer is
+port(
 	r1 :in std_logic_vector (24 downto 0);	  
 	r2 :in std_logic_vector (24 downto 0);
 	r3 :in std_logic_vector (24 downto 0);
@@ -98,6 +99,7 @@ entity instruction_buffer is
 	r63 :in std_logic_vector (24 downto 0);
 	r64 :in std_logic_vector (24 downto 0);	
 	output : out std_logic_vector (24 downto 0)
+	);
 end instruction_buffer;
 
 --}} End of automatically maintained section
