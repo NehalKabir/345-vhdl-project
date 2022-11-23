@@ -38,7 +38,6 @@ entity reg_file is
 	 
 	 output1 : out std_logic_vector (127 downto 0);
 	 output2 : out std_logic_vector (127 downto 0);	
-	 output : out std_logic_vector (4 downto 0);
 	 output3 : out std_logic_vector (127 downto 0)
 	 
 	     );
@@ -50,14 +49,14 @@ architecture reg_file of reg_file is
 type std_logic_aoa is array (0 to 31) of std_logic_vector(127 downto 0);
 signal write_to: integer;
 signal regs : std_logic_aoa;
-signal temp1 : integer;
-signal temp2 : integer ;
-signal temp3 : integer;	
+
 
 begin
 
 	process(clk)	
-
+	   variable temp1 : integer;
+variable temp2 : integer ;
+variable temp3 : integer;	
 	begin
 
 
@@ -66,23 +65,28 @@ if(rising_edge(clk)) then
 
 	
 	if sel (24 downto 23) = "10"	then --r4	
-	
-			temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
+			  temp1 := to_integer(unsigned (sel(9 downto 5)));
+			--temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
 			
 			output1 <= regs( temp1)(127 downto 0);
 			
-			temp2 <= to_integer(unsigned(sel(14 downto 10)));
+			temp2 := to_integer(unsigned(sel(14 downto 10)));
 			output2 <= regs(temp2)(	127 downto 0);
 			
-			temp3 <= to_integer (unsigned (sel(19 downto 15)));
+			temp3 := to_integer (unsigned (sel(19 downto 15)));
 			output3 <= regs(temp3)(127 downto 0); 
 			
 		elsif sel (24 downto 23) = "11" then --r3
-			 temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
+			-- temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
+			
+			--output1 <= regs( temp1)(127 downto 0); 
+			
+			 temp1 := to_integer(unsigned (sel(9 downto 5)));
+			--temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
 			
 			output1 <= regs( temp1)(127 downto 0);
 			
-			temp2 <= to_integer(unsigned(sel(14 downto 10)));
+			temp2 := to_integer(unsigned(sel(14 downto 10)));
 			output2 <= regs(temp2)(	127 downto 0);	 
 			
 		
