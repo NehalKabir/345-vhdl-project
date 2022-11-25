@@ -3,89 +3,130 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
+/*
+NOTE FOR TOM
+the asm file should have something like SLMALS rd[5], r1[3], r2[5], r3[6]
+can you seperate the command and the registers
+so place the reg numbers in the appropriate string name and convert to binary 
+you can use this link to convert the string to binary https://peter.bloomfield.online/convert-a-number-to-a-binary-string-and-back-in-cpp/*/
 #pragma warning(disable : 4996)
 
 using namespace std;
 
 int main()
 {
-	ifstream in("Mips.asm");
+    ifstream in("Mips.asm");
 
-	string ins;
-	string word1;
-    string var;
+    string ins;
+    string word1;
+    string rs;
+    string rsd;
+    string rt;
+    string rs3;
+    string rs2;
+    string rs1;
+    string opcode;
+    string LongInt;
+    string SubAdd;
+    string HighLow;
+    string imm;
+    string loadindex;
 
-     while (getline(in, ins)) 
-     {
+
+    while (getline(in, ins))
+    {
         word1 = strtok(const_cast<char*>(ins.c_str()), " ");
         cout << word1;
-        if (word1 == "add")
-            int x;
-        if (word1 == "addi")
-            int x;
-        if (word1 == "addiu")
-            int x;
-        if (word1 == "addu")
-            int x;
-        if (word1 == "and")
-            int x;
-        if (word1 == "andi")
-            int x;
-        if (word1 == "beq")
-            int x;
-        if (word1 == "bne")
-            int x;
-        if (word1 == "j")
-            int x;
-        if (word1 == "jal")
-            int x;
-        if (word1 == "jr")
-            int x;
-        if (word1 == "lbu")
-            int x;
-        if (word1 == "lhu")
-            int x;
-        if (word1 == "ll")
-            int x;
-        if (word1 == "lui")
-            int x;
-        if (word1 == "lw")
-            int x;
-        if (word1 == "nor")
-            int x;
-        if (word1 == "or")
-            int x;
-        if (word1 == "ori")
-            int x;
-        if (word1 == "slt")
-            int x;
-        if (word1 == "slti")
-            int x;
-        if (word1 == "sltiu")
-            int x;
-        if (word1 == "sltu")
-            int x;
-        if (word1 == "sll")
-            int x;
-        if (word1 == "srl")
-            int x;
-        if (word1 == "sb")
-            int x;
-        if (word1 == "sc")
-            int x;
-        if (word1 == "sh")
-            int x;
-        if (word1 == "sw")
-            int x;
-        if (word1 == "sub")
-            int x;
-        if (word1 == "subu")
-        {
-            var = strtok(nullptr, " ");
+        if (word1 == "LI") {//load imm
+            opcode = "0" + loadindex + imm + rsd;
+        }
+        if (word1 == "SIMALS") {//signed int mult add low sat
+            rs = strtok(nullptr, " ");
+            opcode = "10000" + rs3 + rs2 + rs1 + rsd;
+        }
+        if (word1 == "SIMAHS") {//signed int mylt add high sat
+            opcode = "10001" + rs3 + rs2 + rs1 + rsd;
+        }
+            
+        if (word1 == "SIMSLS") {//signed int mult sub low sat
+            opcode = "10010" + rs3 + rs2 + rs1 + rsd;
+        }
+          
+        if (word1 == "SIMSHS") {// sign in mult sub high sat
+            opcode = "10011" + rs3 + rs2 + rs1 + rsd;
+        }
+        if (word1 == "SLIMALS") {//sign long int mult add low sat
+            opcode = "10100" + rs3 + rs2 + rs1 + rsd;
+        }
+          
+        if (word1 == "SLIMAHS") {//sign long intt mult add high sat
+            opcode = "10101" + rs3 + rs2 + rs1 + rsd;
+        }
+        if (word1 == "SLIMSLS") {//sign long intt mult sub low sat
+            opcode = "10110" + rs3 + rs2 + rs1 + rsd;
+        }
+        if (word1 == "SLIMSHS") {//sign long int mult sub high sat
+            opcode = "10111" + rs3 + rs2 + rs1 + rsd;
+        }
+        if (word1 == "nop") {//nop
+            opcode = "1111110000" + rs2 + rs1 + rsd;
+        }
+            
+        if (word1 == "clzw") {//clzw
+            opcode = "1111110001" + rs2 + rs1 + rsd;
+        }
+        if (word1 == "au") {//AU
+            opcode = "1111110010" + rs2 + rs1 + rsd;
+        }
+        
+        if (word1 == "ahu") {//ahu
+            opcode = "1111110011" + rs2 + rs1 + rsd;
+        }
 
+        if (word1 == "ahs") {//ahs
+            opcode = "1111110100" + rs2 + rs1 + rsd;
+        }
+            
+        if (word1 == "and") {//and
+            opcode = "1111110101" + rs2 + rs1 + rsd;
+        }
+        if (word1 == "bcw") {//bcw
+            opcode = "1111110110" + rs2 + rs1 + rsd;
+        }
+        if (word1 == "maxws") {//maxws
+            opcode = "1111110111" + rs2 + rs1 + rsd;
+        }
+           
+        if (word1 == "minws") {//minws
+            opcode = "1111111000" + rs2 + rs1 + rsd;
+        }
+         
+        if (word1 == "mlhu") {
+            opcode = "1111111001" + rs2 + rs1 + rsd;
+        }
+
+        if (word1 == "mlhcu") {
+            opcode = "1111111010" + rs2 + rs1 + rsd;
+        }
+        if (word1 == "or") {
+            opcode = "1111111011" + rs2 + rs1 + rsd;
+        }
+
+        if (word1 == "pcntw") {
+            opcode = "1111111100" + rs2 + rs1 + rsd;
+        }
+
+        if (word1 == "rotw") {
+            opcode = "1111111101" + rs2 + rs1 + rsd;
+        }
+
+        if (word1 == "sfwu") {
+            opcode = "1111111110" + rs2 + rs1 + rsd;
+        }
+        if (word1 == "sfhs") {
+            opcode = "1111111111" + rs2 + rs1 + rsd;
         }
     }
 
-	return 0;
+    return 0;
 }
