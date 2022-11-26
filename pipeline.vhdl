@@ -30,21 +30,27 @@ use work.all;
 entity pipeline is
 	port(
 	i_if_d: in std_logic_vector(24 downto 0);
+	i_if_d2: in std_logic_vector(24 downto 0);
     i_id_ex1: in std_logic_vector(127 downto 0);
     i_id_ex2: in std_logic_vector(127 downto 0);
 	i_id_ex3: in std_logic_vector(127 downto 0);
 	i_id_ex4: in integer;
+	i_id_ex5: in std_logic_vector(24 downto 0);
 	i_ex_wb1: in std_logic_vector(127 downto 0);
 	i_ex_wb2: in integer;
+	i_ex_wb3: in std_logic_vector(24 downto 0);
 	
 	
 	o_if_d: out std_logic_vector(24 downto 0);
+	o_if_d2: out std_logic_vector(24 downto 0);
     o_id_ex1: out std_logic_vector(127 downto 0);
     o_id_ex2: out std_logic_vector(127 downto 0);
 	o_id_ex3: out std_logic_vector(127 downto 0);
 	o_id_ex4: out integer;
+	o_id_ex5: out std_logic_vector(24 downto 0);
 	o_ex_wb1: out std_logic_vector(127 downto 0);
 	o_ex_wb2: out integer;
+	o_ex_wb3: out std_logic_vector(24 downto 0);
 	
 	clk: in std_logic
 	);
@@ -57,13 +63,16 @@ begin
 	begin
 		if(rising_edge(clk)) then
 			o_if_d <= i_if_d;
+			o_if_d2 <= i_if_d2;
 			o_id_ex1 <= i_id_ex1;
 			o_id_ex2 <= i_id_ex2;
 			o_id_ex3 <= i_id_ex3;
 			o_id_ex4 <= i_id_ex4;
+			o_id_ex5 <= i_id_ex5;
 			o_ex_wb1 <= i_ex_wb1;
 			o_ex_wb2 <= i_ex_wb2;
+			o_ex_wb3 <= i_ex_wb3;
 		end if;
 	end process;	
 end pipeline;
-		
+	
