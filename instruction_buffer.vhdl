@@ -42,7 +42,8 @@ entity instruction_buffer is
 	clk : in std_logic;
 	PC :in integer;
 	reg : in a ;
-	output : out std_logic_vector (24 downto 0)	
+	output : out std_logic_vector (24 downto 0);
+	prev_output : out std_logic_vector (24 downto 0)
 	);
 	
 end instruction_buffer;
@@ -58,6 +59,11 @@ begin
 	begin
 		if(rising_edge(clk)) then
 			output <= regs(PC);
+			if(PC > 0) then
+				prev_output <= regs(PC - 1);
+			else
+				prev_output <= "0000000000000000000000000";
+			end if;
 		end if;
 	end process;
 	
