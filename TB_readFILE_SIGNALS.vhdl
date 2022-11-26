@@ -44,21 +44,28 @@ type b is array ( 0 to 32) of std_logic_vector( 127 downto 0);
 signal reg_data : b;   			 
 
 signal i_if_d: std_logic_vector(24 downto 0);
+signal i_if_d2: std_logic_vector(24 downto 0);
 signal i_id_ex1: std_logic_vector(127 downto 0);
 signal i_id_ex2: std_logic_vector(127 downto 0);
 signal i_id_ex3: std_logic_vector(127 downto 0);
 signal i_id_ex4: integer;
+signal i_id_ex5: std_logic_vector(24 downto 0);
 signal i_ex_wb1: std_logic_vector(127 downto 0);
 signal i_ex_wb2: integer;
+signal i_ex_wb3: std_logic_vector(24 downto 0);
+
 	
 	
 signal o_if_d: std_logic_vector(24 downto 0);
+signal o_if_d2: std_logic_vector(24 downto 0);
 signal o_id_ex1: std_logic_vector(127 downto 0);
 signal o_id_ex2: std_logic_vector(127 downto 0);
 signal o_id_ex3: std_logic_vector(127 downto 0);
 signal o_id_ex4: integer;
+signal o_id_ex5: std_logic_vector(24 downto 0);
 signal o_ex_wb1: std_logic_vector(127 downto 0);
 signal o_ex_wb2: integer;
+signal o_ex_wb3: std_logic_vector(24 downto 0);
 -- buff
 signal prev_ins: std_logic_vector(24 downto 0);
 begin
