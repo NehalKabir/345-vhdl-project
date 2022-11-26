@@ -138,6 +138,15 @@ begin
 		o_ex_wb1 => o_ex_wb1,
 		o_ex_wb2 => o_ex_wb2
 		);
+		--nehal was here 
+		UUT3 : entity alu 
+		port map(
+		reg1 => i_id_ex1,
+		reg2 => i_id_ex2,
+		reg3 => i_id_ex3,
+		output =>  i_ex_wb1
+		);
+	
 	
 	-- System Clock Process
 	clock_gen : process
