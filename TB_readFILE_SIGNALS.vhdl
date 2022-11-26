@@ -120,6 +120,24 @@ begin
 		write => o_ex_wb2,
 		write_o => i_id_ex4
 		);
+	UUT5 : entity pipeline 
+		port map( 
+		clk => clk,
+		i_if_d => i_if_d,
+		i_id_ex1 =>  i_id_ex1,
+		i_id_ex2 => i_id_ex2,
+		i_id_ex3 => i_id_ex3,
+		i_id_ex4 => i_id_ex4,
+		i_ex_wb1 => i_ex_wb1,
+		i_ex_wb2 => i_ex_wb2,
+		o_if_d => o_if_d,
+		o_id_ex1 => o_id_ex1,
+		o_id_ex2 => o_id_ex2,
+		o_id_ex3 => o_id_ex3, 
+		o_id_ex4 => o_id_ex4,
+		o_ex_wb1 => o_ex_wb1,
+		o_ex_wb2 => o_ex_wb2
+		);
 	
 	-- System Clock Process
 	clock_gen : process
