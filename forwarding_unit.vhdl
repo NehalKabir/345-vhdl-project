@@ -30,8 +30,10 @@ entity forwarding_unit is
 	port(
 	curr_instr: in std_logic_vector(24 downto 0);
 	prev_instr: in std_logic_vector(24 downto 0);
+	new_data: in std_logic_vector (127 downto 0);
 	clk: in std_logic;
-	slct: out std_logic	-- 0 for regular instr buf, 1 for alu output
+	fwd_data: out std_logic_vector (127 downto 0);
+	slct: out integer	-- 0 for regular instr buf, 1 for change rs1, 2 for rs2, and 3 for rs3,
 	);
 end forwarding_unit;
 
@@ -39,12 +41,11 @@ architecture forwarding_unit of forwarding_unit is
 signal tester: std_logic_vector(4 downto 0);
 signal no_prev: std_logic_vector(24 downto 0);
 begin
-	no_prev <= "0000000000000000000000000";	
-		tester <= prev_instr(4 downto 0);
+	no_prev <= "0000000000000000000000000";
+	tester <= prev_instr(4 downto 0);
 	process(clk)
 	begin
 		if(rising_edge(clk)) then
-		
 			if(prev_instr = no_prev) then	--if no prev instruction
 				slct <= '0';
 			elsif(curr_instr(24 downto 23) = "10") then --R4
@@ -58,10 +59,9 @@ begin
 					slct <= '1';
 				else
 					slct <= '0';
-				end if;	 
-				else 
-					slct <= '0';
+				end if;
 			end if;
 		end if;
 	end process;
-end forwarding_unit;	
+end forwarding_unit;		
+		
