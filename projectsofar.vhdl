@@ -422,7 +422,7 @@ begin
 			end if;	 
 			-------------------------------------------	  63 - 32
 			if reg1(63 downto 32 ) = "00000000000000000000000000000000" then
-				output(63 downto 32) <= "x"00000020"";
+				output(63 downto 32) <= x"00000020";
 			else
 				
 			for i in 32 to 63 loop
@@ -861,7 +861,6 @@ begin
 		elsif sel (23 downto 21) = "111" then 
 			output (127 downto 112) <= sel (20 downto 5);
 		end if;
-	 end if;
 	 fwd_o <= fwd;
 	 end if;
 	  end process;
