@@ -49,7 +49,7 @@ signal test2: std_logic_vector(64 downto 0);
 signal test3 :std_logic_vector(32 downto 0);		--for r4 000 - 011
 signal test4 :std_logic_vector(16 downto 0);
 begin  
-	process(reg1, reg2, reg3)
+	process(reg1, reg2, reg3, clk)
 	variable temp : std_logic_vector (127 downto 0);
 	variable temp2 : std_logic_vector (127 downto 0);
 	variable temp_ext1: std_logic_vector(64 downto 0);
