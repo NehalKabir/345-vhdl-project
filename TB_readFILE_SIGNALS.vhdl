@@ -66,8 +66,6 @@ signal o_id_ex5: std_logic_vector(24 downto 0);
 signal o_ex_wb1: std_logic_vector(127 downto 0);
 signal o_ex_wb2: integer;
 signal o_ex_wb3: std_logic_vector(24 downto 0);
--- buff
-signal prev_ins: std_logic_vector(24 downto 0);
 begin
 	
 	process is
@@ -113,7 +111,7 @@ begin
 		PC => PC,
 		reg => instruction,
 		output => i_if_d,
-		prev_output => prev_ins
+		prev_output => i_if_d2
 		);
 	
 	UUT2 : entity reg_file
@@ -125,7 +123,9 @@ begin
 		output2 => i_id_ex2,
 		output3 => i_id_ex3,
 		write => o_ex_wb2,
-		write_o => i_id_ex4
+		write_o => i_id_ex4,
+		fwd => o_if_d2,
+		fwd_o => i_id_ex5
 		);
 	UUT5 : entity pipeline 
 		port map( 
@@ -154,10 +154,13 @@ begin
 		--nehal was here 
 		UUT3 : entity alu 
 		port map(
+		clk => clk,
 		reg1 => i_id_ex1,
 		reg2 => i_id_ex2,
 		reg3 => i_id_ex3,
-		output =>  i_ex_wb1
+		output =>  i_ex_wb1,
+		fwd => o_id_ex5,
+		fwd_o => i_ex_wb3
 		);
 	
 	
@@ -169,7 +172,6 @@ begin
 		loop	-- inifinite loop
 			clk <= not clk;
 			wait for clk_period/2;
-			exit when END_SIM = true;
 		end loop;
 		std.env.finish;
 	end process;
