@@ -34,7 +34,9 @@ entity reg_file is
 	--take in 25 long what type it is li r3/4 read what reg file suppose to be  
 	 sel : in std_logic_vector(24 downto 0);
 	 
-	 write:in std_logic;
+	 write : in integer;
+	 
+	 write_o : out integer;
 	 
 	 output1 : out std_logic_vector (127 downto 0);
 	 output2 : out std_logic_vector (127 downto 0);	
@@ -56,7 +58,8 @@ begin
 	process(clk)	
 	   variable temp1 : integer;
 variable temp2 : integer ;
-variable temp3 : integer;	
+variable temp3 : integer;
+variable temp4 : integer;
 	begin
 
 
@@ -90,11 +93,12 @@ if(rising_edge(clk)) then
 			output2 <= regs(temp2)(	127 downto 0);	 
 			
 		
-		end if;	
+		end if;
+		
+		temp4 := to_integer(unsigned(sel(4 downto 0)));
+		write_o <= temp4;
 			
-		if(write = '1') then
-				regs(write_to) <= write_reg;
-			end if;
+		regs(write) <= write_reg;
 		--end if;	  
 	end if;
 	end process;
