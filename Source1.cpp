@@ -3,19 +3,15 @@
 #include <fstream>
 #include <string>
 #include <vector>
-/*
-NOTE FOR TOM
-the asm file should have something like SLMALS rd[5], r1[3], r2[5], r3[6]
-can you seperate the command and the registers
-so place the reg numbers in the appropriate string name and convert to binary 
-you can use this link to convert the string to binary https://peter.bloomfield.online/convert-a-number-to-a-binary-string-and-back-in-cpp/*/
+#include <bitset>
+
 #pragma warning(disable : 4996)
 
 using namespace std;
 
 int main()
 {
-    ifstream in("Mips.asm");
+	ifstream in("Mips.asm");
 
     string ins;
     string word1;
@@ -32,8 +28,9 @@ int main()
     string imm;
     string loadindex;
 
+    int temp;
 
-    while (getline(in, ins))
+     while (getline(in, ins))
      {
         word1 = strtok(const_cast<char*>(ins.c_str()), " ");
         //cout << word1;
@@ -379,7 +376,7 @@ int main()
             opcode = "1111111111" + rs2 + rs1 + rsd;
         }
         cout << opcode << endl;
-    }
+     }
 
-    return 0;
+	return 0;
 }
