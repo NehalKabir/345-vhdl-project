@@ -124,19 +124,25 @@ begin
 		port map( 
 		clk => clk,
 		i_if_d => i_if_d,
+		i_if_d2 => i_if_d2,
 		i_id_ex1 =>  i_id_ex1,
 		i_id_ex2 => i_id_ex2,
 		i_id_ex3 => i_id_ex3,
 		i_id_ex4 => i_id_ex4,
+		i_id_ex5 => i_id_ex5,
 		i_ex_wb1 => i_ex_wb1,
 		i_ex_wb2 => i_ex_wb2,
+		i_ex_wb3 => i_ex_wb3,
 		o_if_d => o_if_d,
+		o_if_d2 => o_if_d2,
 		o_id_ex1 => o_id_ex1,
 		o_id_ex2 => o_id_ex2,
 		o_id_ex3 => o_id_ex3, 
 		o_id_ex4 => o_id_ex4,
+		o_id_ex5 => o_id_ex5,
 		o_ex_wb1 => o_ex_wb1,
-		o_ex_wb2 => o_ex_wb2
+		o_ex_wb2 => o_ex_wb2,
+		o_ex_wb3 => o_ex_wb3
 		);
 		--nehal was here 
 		UUT3 : entity alu 
