@@ -36,6 +36,7 @@ end tstbnch;
 
 architecture tstbnch of tstbnch is
 --basic
+constant clk_period : time := 10 ns;
 signal clk: std_logic;
 signal PC: integer;	  
 signal instruction : a;	 
