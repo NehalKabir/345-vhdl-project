@@ -30,6 +30,10 @@ entity alu is
 	 reg1 :in std_logic_vector (127 downto 0);  
 	 reg2 :in std_logic_vector (127 downto 0);
 	 reg3 :in std_logic_vector (127 downto 0);
+	 clk :in std_logic;
+	 
+	 fwd : in std_logic_vector(24 downto 0);
+	 fwd_o : out std_logic_vector(24 downto 0);
 
 		 output : out std_logic_vector (127 downto 0)
 	     );
@@ -58,7 +62,8 @@ begin
 	variable count4: std_logic_vector(31 downto 0);
 	variable temp_rotate: std_logic_vector(31 downto 0);
 	variable rOtate: integer;
-	begin 					 
+	begin
+	if(rising_edge(clk)) then	
 	op <= sel(22 downto 20);
 		--r4 instructions 
 	if sel(24 downto 23) = "10"	then 
@@ -856,6 +861,8 @@ begin
 		elsif sel (23 downto 21) = "111" then 
 			output (127 downto 112) <= sel (20 downto 5);
 		end if;
+	 end if;
+	 fwd_o <= fwd;
 	 end if;
 	  end process;
 
