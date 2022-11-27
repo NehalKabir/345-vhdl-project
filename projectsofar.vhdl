@@ -48,9 +48,7 @@ end alu;
 
 
 architecture alu of alu is
-signal reg1_sig : std_logic_vector (127 downto 0);  
-signal reg2_sig : std_logic_vector (127 downto 0);
-signal reg3_sig : std_logic_vector (127 downto 0);
+
 signal r : std_logic_vector(1 downto 0);  
 signal op : std_logic_vector(2 downto 0);
 signal test1: std_logic_vector(127 downto 0);
@@ -58,7 +56,10 @@ signal test2: std_logic_vector(64 downto 0);
 signal test3 :std_logic_vector(32 downto 0);		--for r4 000 - 011
 signal test4 :std_logic_vector(16 downto 0);
 begin  
-	process(reg1_sig, reg2_sig, reg3_sig, clk)
+	process(clk) 
+	variable reg1_sig : std_logic_vector (127 downto 0);  
+variable reg2_sig : std_logic_vector (127 downto 0);
+variable reg3_sig : std_logic_vector (127 downto 0);
 	variable sel : std_logic_vector (24 downto 0);
 	variable temp : std_logic_vector (127 downto 0);
 	variable temp2 : std_logic_vector (127 downto 0);
@@ -74,18 +75,18 @@ begin
 	variable rOtate: integer;
 	begin
 	if(rising_edge(clk)) then
-	reg1_sig <= reg1;
-	reg2_sig <= reg2;
-	reg3_sig <= reg3;
+	reg1_sig := reg1;
+	reg2_sig := reg2;
+	reg3_sig := reg3;
 	sel := fwd;
 	if(slct = 1) then
-		reg1_sig <= regf;
+		reg1_sig := regf;
 	elsif(slct = 2) then
-		reg2_sig <= regf;
+		reg2_sig := regf;
 	elsif(slct = 3) then
-		reg3_sig <= regf;
+		reg3_sig := regf;
 	end if;
-	
+		test1 <= reg1_sig;
 	op <= sel(22 downto 20);
 		--r4 instructions 
 	if sel(24 downto 23) = "10"	then 
@@ -890,7 +891,4 @@ begin
 	  end process;
 
 end alu;
-	
-
-
 	
