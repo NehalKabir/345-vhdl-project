@@ -50,9 +50,11 @@ signal i_id_ex2: std_logic_vector(127 downto 0);
 signal i_id_ex3: std_logic_vector(127 downto 0);
 signal i_id_ex4: integer;
 signal i_id_ex5: std_logic_vector(24 downto 0);
+signal i_id_ex6: std_logic_vector(24 downto 0);
 signal i_ex_wb1: std_logic_vector(127 downto 0);
 signal i_ex_wb2: integer;
-signal i_ex_wb3: std_logic_vector(24 downto 0);
+signal i_ex_wb3: std_logic_vector(24 downto 0);	
+signal i_ex_wb4: std_logic_vector(24 downto 0);
 
 	
 	
@@ -63,9 +65,13 @@ signal o_id_ex2: std_logic_vector(127 downto 0);
 signal o_id_ex3: std_logic_vector(127 downto 0);
 signal o_id_ex4: integer;
 signal o_id_ex5: std_logic_vector(24 downto 0);
+signal o_id_ex6: std_logic_vector(24 downto 0);
 signal o_ex_wb1: std_logic_vector(127 downto 0);
 signal o_ex_wb2: integer;
 signal o_ex_wb3: std_logic_vector(24 downto 0);
+signal o_ex_wb4: std_logic_vector(24 downto 0);
+signal fwd_data: std_logic_vector(127 downto 0);
+signal slct: integer;
 begin
 	
 	process is
@@ -125,7 +131,8 @@ begin
 		write => o_ex_wb2,
 		write_o => i_id_ex4,
 		fwd => o_if_d2,
-		fwd_o => i_id_ex5
+		fwd_o => i_id_ex5,
+		fwd_o2 => i_id_ex6
 		);
 	UUT5 : entity pipeline 
 		port map( 
@@ -137,9 +144,11 @@ begin
 		i_id_ex3 => i_id_ex3,
 		i_id_ex4 => i_id_ex4,
 		i_id_ex5 => i_id_ex5,
+		i_id_ex6 => i_id_ex6,
 		i_ex_wb1 => i_ex_wb1,
 		i_ex_wb2 => i_ex_wb2,
 		i_ex_wb3 => i_ex_wb3,
+		i_ex_wb4 => i_ex_wb4,
 		o_if_d => o_if_d,
 		o_if_d2 => o_if_d2,
 		o_id_ex1 => o_id_ex1,
@@ -147,9 +156,11 @@ begin
 		o_id_ex3 => o_id_ex3, 
 		o_id_ex4 => o_id_ex4,
 		o_id_ex5 => o_id_ex5,
+		o_id_ex6 => o_id_ex6,
 		o_ex_wb1 => o_ex_wb1,
 		o_ex_wb2 => o_ex_wb2,
-		o_ex_wb3 => o_ex_wb3
+		o_ex_wb3 => o_ex_wb3,
+		o_ex_wb4 => o_ex_wb4
 		);
 		--nehal was here 
 		UUT3 : entity alu 
@@ -160,24 +171,32 @@ begin
 		reg3 => i_id_ex3,
 		output =>  i_ex_wb1,
 		fwd => o_id_ex5,
-		fwd_o => i_ex_wb3
+		fwd_o => i_ex_wb3,
+		fwd2 => o_id_ex6,
+		fwd_o2 => i_ex_wb4,
+		regf => fwd_data,
+		slct => slct
 		);
-	
+		
+		UUT4: entity forwarding_unit
+		port map(
+		clk => clk,
+		curr_instr => o_ex_wb4,
+		prev_instr => o_ex_wb3,
+		new_data => o_ex_wb1,
+		fwd_data => fwd_data,
+		slct => slct
+		);
+		
 	
 	-- System Clock Process
 	clock_gen : process
 	begin
-		clk <= '0';		 
-		PC <= 0;
+		clk <= '0';
 		wait for clk_period/2;
 		loop	-- inifinite loop
-			clk <= not clk;	 
-			if clk = '1' then
-				PC <= PC + 1;
-			end if;
-			
-			wait for clk_period/2;	  
-			
+			clk <= not clk;
+			wait for clk_period/2;
 		end loop;
 		std.env.finish;
 	end process;
