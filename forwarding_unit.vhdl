@@ -46,6 +46,7 @@ begin
 	process(clk)
 	begin
 		if(rising_edge(clk)) then
+			fwd_data <= new_data;
 			if(prev_instr = no_prev) then	--if no prev instruction
 				slct <= 0;
 			elsif(curr_instr(24 downto 23) = "10") then --R4
