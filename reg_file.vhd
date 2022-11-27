@@ -20,11 +20,13 @@
 
 --{{ Section below this comment is automatically maintained
 --   and may be overwritten
---{entity {half_adder} architecture {half_adder}}
-
+--{entity {half_adder} architecture {half_adder}}	
+	
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.custom_types.all;
+use work.all;
 entity reg_file is
 	 port(
 	 
@@ -32,7 +34,8 @@ entity reg_file is
 	 
 	 write_reg :in std_logic_vector (127 downto 0);
 	--take in 25 long what type it is li r3/4 read what reg file suppose to be  
-	 sel : in std_logic_vector(24 downto 0);
+	sel : in std_logic_vector(24 downto 0);
+	reg : in b;
 	 
 	 write : in integer;
 	 
@@ -52,13 +55,11 @@ end reg_file;
 --}} End of automatically maintained section
 
 architecture reg_file of reg_file is
-type std_logic_aoa is array (0 to 31) of std_logic_vector(127 downto 0);
 signal write_to: integer;
-signal regs : std_logic_aoa;
-
+signal regs : b;
 
 begin
-
+ regs <= reg;
 	process(clk)	
 	   variable temp1 : integer;
 variable temp2 : integer ;
