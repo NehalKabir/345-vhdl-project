@@ -28,7 +28,8 @@ library IEEE;
 package custom_types is
     use IEEE.std_logic_1164.all;	
 --	type std_logic_aoa is array (0 to 31) of std_logic_vector(127 downto 0);
-    type a is array (0  to 63) of std_logic_vector (24 downto 0);
+type a is array (0  to 63) of std_logic_vector (24 downto 0);
+type b is array (0 to 31) of std_logic_vector(127 downto 0);
 end package;
 
 
@@ -51,16 +52,14 @@ end instruction_buffer;
 --}} End of automatically maintained section
 
 architecture instruction_buffer of instruction_buffer is
-type std_logic_aoa is array (0 to 63) of std_logic_vector(24 downto 0);
-signal regs : std_logic_aoa;
 begin
 	
 	process(clk)
 	begin
 		if(rising_edge(clk)) then
-			output <= regs(PC);
+			output <= reg(PC);
 			if(PC > 0) then
-				prev_output <= regs(PC - 1);
+				prev_output <= reg(PC - 1);
 			else
 				prev_output <= "0000000000000000000000000";
 			end if;
