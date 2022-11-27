@@ -38,13 +38,13 @@ entity forwarding_unit is
 end forwarding_unit;
 
 architecture forwarding_unit of forwarding_unit is
-signal tester: std_logic_vector(4 downto 0);
 signal no_prev: std_logic_vector(24 downto 0);
 begin
 	no_prev <= "0000000000000000000000000";
-	tester <= prev_instr(4 downto 0);
 	process(clk)
+	variable tester: std_logic_vector(4 downto 0);
 	begin
+		tester := prev_instr(4 downto 0);
 		if(rising_edge(clk)) then
 			fwd_data <= new_data;
 			if(prev_instr = no_prev) then	--if no prev instruction
