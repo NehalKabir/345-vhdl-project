@@ -47,7 +47,7 @@ begin
 	begin
 		if(rising_edge(clk)) then
 			if(prev_instr = no_prev) then	--if no prev instruction
-				slct <= '0';
+				slct <= 0;
 			elsif(curr_instr(24 downto 23) = "10") then --R4
 				if tester = curr_instr(9 downto 5)then
 					slct <= 1;	 
@@ -59,10 +59,12 @@ begin
 					slct <= 0;
 				end if;	
 			elsif(curr_instr(24 downto 23) = "11") then --R3
-				if(tester = curr_instr(9 downto 5)) or ((tester = curr_instr(14 downto 10))) then
-					slct <= '1';
+				if(tester = curr_instr(9 downto 5)) then
+					slct <= 1;
+				elsif((tester = curr_instr(14 downto 10))) then
+					slct <= 2;
 				else
-					slct <= '0';
+					slct <= 0;
 				end if;
 			end if;
 		end if;
