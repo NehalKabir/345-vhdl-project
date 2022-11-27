@@ -41,7 +41,8 @@ entity alu is
 	 fwd_o : out std_logic_vector(24 downto 0);
 	 fwd_o2 : out std_logic_vector(24 downto 0);
 
-		 output : out std_logic_vector (127 downto 0)
+	 output : out std_logic_vector (127 downto 0);
+	 write_index: out integer
 	     );
 end alu;	 
 
@@ -882,6 +883,7 @@ begin
 	 end if;
 	 fwd_o <= fwd;
 	 fwd_o2 <= fwd2;
+	 write_index <= to_integer(unsigned(fwd(4 downto 0)));
 	 end if;
 	  end process;
 
