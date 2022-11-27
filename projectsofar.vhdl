@@ -408,10 +408,9 @@ begin
 				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
 			end if;
 			
-			write_index <= to_integer(unsigned(fwd(4 downto 0)));
 		end if;--r4 end
 	
-		
+	write_index <= to_integer(unsigned(fwd(4 downto 0)));	
 	 ---- r3 instructions-------------------------------------------------------------------
 	 elsif sel(24 downto 23) = "11" then 
 		 --nop-------------------------------------------------------------------------
@@ -841,9 +840,9 @@ begin
 				output(127 downto 112) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
 			
-		 	write_index <= to_integer(unsigned(fwd(4 downto 0)));
+		 	
 		end if; --r3 end  
-		
+	write_index <= to_integer(unsigned(fwd(4 downto 0)));	
 	--load immediate
 	elsif sel (24) = '0' then		
 		--first 16	  
