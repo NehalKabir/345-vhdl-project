@@ -36,19 +36,20 @@ end tstbnch;
 
 architecture tstbnch of tstbnch is
 --basic
-constant clk_period : time := 10 ns;
+constant clk_period : time := 50 ns;
 signal clk: std_logic;
 signal PC: integer;	  
-signal instruction : a;	 
-type b is array ( 0 to 32) of std_logic_vector( 127 downto 0);
-signal reg_data : b;   			 
+signal instruction : a;
+signal reg_data : b;
+signal i : integer;
+signal j : integer;
 
 signal i_if_d: std_logic_vector(24 downto 0);
 signal i_if_d2: std_logic_vector(24 downto 0);
 signal i_id_ex1: std_logic_vector(127 downto 0);
 signal i_id_ex2: std_logic_vector(127 downto 0);
 signal i_id_ex3: std_logic_vector(127 downto 0);
-signal i_id_ex4: integer;
+signal i_id_ex4: integer := 0;
 signal i_id_ex5: std_logic_vector(24 downto 0);
 signal i_id_ex6: std_logic_vector(24 downto 0);
 signal i_ex_wb1: std_logic_vector(127 downto 0);
@@ -78,8 +79,6 @@ begin
   variable current_line : line;  
   			 --ins 64 25 bit
         variable current_line_reg : line;	 
-		variable i : integer := 0;
-		variable j : integer := 0;
         variable result_line : line;
         file instr_file : text;
         file reg_file : text;
@@ -90,25 +89,51 @@ begin
 		
 		
       begin
-        file_open(instr_file, "binary inputs.txt", read_mode);--read in the binary inputs from the file "binary inputs.txt" that contains out instructions
-        while not endfile(instr_file) loop--run until the end of the file
-              readline(instr_file, current_line);--read current line of inputs
+		i <= 0;
+		j <= 0;
+		wait for 10 ns;
+        file_open(instr_file, "binary_inputs.txt", read_mode);--read in the binary instructions
+        while not endfile(instr_file) loop
+              readline(instr_file, current_line);
               BREAD(current_line, current_instr);
             instruction(i) <= current_instr;
-            i := i + 1;
-            wait for 50ns;
+            i <= i + 1;
+            wait for 10ns;
         end loop;
         file_close(instr_file);
-
-        file_open(reg_file, "register_values.txt", read_mode);
-        while not endfile(reg_file) loop
-              readline(reg_file, current_line_reg);
-              bread(current_line_reg, current_reg);
-            reg_data(j) <= current_reg;
-            j := j + 1;
-            wait for 50ns;
-        end loop;
-        file_close(reg_file);
+		PC <= 0;
+--        file_open(reg_file, "register_values.txt", read_mode);
+        --while not endfile(reg_file) loop
+--              readline(reg_file, current_line_reg);
+--              BREAD(current_line_reg, current_reg);
+--            reg_data(j) <= current_reg;
+--            j <= j + 1;
+--            wait for 10ns;
+--        end loop;
+--        file_close(reg_file);
+		while j <= 31 loop
+			reg_data(j) <= std_logic_vector(to_unsigned(j, 128));
+			j <= j + 1;
+			wait for 10 ns;
+		end loop;
+		
+		clk <= '0';
+		file_open(results_file, "testbench_results.txt", write_mode);
+		while PC < 30 loop
+			wait for clk_period/2;
+			clk <= not clk;
+			wait for clk_period/2;
+			clk <= not clk;
+			if( o_ex_wb2 > 0) then
+				reg_data(o_ex_wb2) <= o_ex_wb1;
+			end if;
+			write(result_line, string'("PC: "));
+			write(result_line, PC);
+			writeLine(results_file, result_line);
+			
+			PC <= PC + 1;
+		end loop;
+		std.env.finish;
 	 end process;
 	
 	UUT1 : entity instruction_buffer
@@ -123,6 +148,7 @@ begin
 	UUT2 : entity reg_file
 		port map (
 		clk => clk,
+		reg => reg_data,
 		write_reg => o_ex_wb1,
 		sel => o_if_d,
 		output1 => i_id_ex1,
@@ -133,6 +159,7 @@ begin
 		fwd => o_if_d2,
 		fwd_o => i_id_ex5,
 		fwd_o2 => i_id_ex6
+		--reg_o => reg_data
 		);
 	UUT5 : entity pipeline 
 		port map( 
@@ -175,7 +202,8 @@ begin
 		fwd2 => o_id_ex6,
 		fwd_o2 => i_ex_wb4,
 		regf => fwd_data,
-		slct => slct
+		slct => slct,
+		write_index => i_ex_wb2
 		);
 		
 		UUT4: entity forwarding_unit
@@ -187,20 +215,5 @@ begin
 		fwd_data => fwd_data,
 		slct => slct
 		);
-		
-	
-	-- System Clock Process
-	clock_gen : process
-	begin
-		clk <= '0';
-		PC <= 0;
-		wait for clk_period/2;
-		loop	-- inifinite loop
-			clk <= not clk;
-			wait for clk_period/2;
-				PC <= PC + 1;
-		end loop;
-		std.env.finish;
-	end process;
 
 end tstbnch;
