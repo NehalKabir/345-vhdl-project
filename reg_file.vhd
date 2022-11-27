@@ -48,6 +48,7 @@ entity reg_file is
 	 output1 : out std_logic_vector (127 downto 0);
 	 output2 : out std_logic_vector (127 downto 0);	
 	 output3 : out std_logic_vector (127 downto 0)
+	 --reg_o: out b
 	 
 	     );
 end reg_file;
@@ -56,25 +57,26 @@ end reg_file;
 
 architecture reg_file of reg_file is
 signal write_to: integer;
-signal regs : b;
+
 
 begin
- regs <= reg;
-	process(clk)	
-	   variable temp1 : integer;
-variable temp2 : integer ;
+ process(clk)	
+variable temp1 : integer;
+variable temp2 : integer;
 variable temp3 : integer;
 variable temp4 : integer;
+variable regs : b;
 	begin
 
 
 	
 if(rising_edge(clk)) then 	
 
-	
+	regs := reg;
 	if sel (24 downto 23) = "10"	then --r4	
 			  temp1 := to_integer(unsigned (sel(9 downto 5)));
-			--temp1 <= to_integer(unsigned (sel(9 downto 5)));	 
+			--temp1 <= to_integer(unsigned (sel(9 downto 5)));
+			write_to <= temp1;
 			
 			output1 <= regs( temp1)(127 downto 0);
 			
@@ -102,12 +104,13 @@ if(rising_edge(clk)) then
 		
 		temp4 := to_integer(unsigned(sel(4 downto 0)));
 		write_o <= temp4;
-			
-		regs(write) <= write_reg;
+		if  write >= 0 then	
+			regs(write) := write_reg;
+			--reg_o <= regs;
+		end if;	
 		
 		fwd_o <= fwd;
-		fwd_o2 <= sel;
-		--end if;	  
+		fwd_o2 <= sel;	  
 	end if;
 	end process;
 	
