@@ -51,7 +51,6 @@ architecture alu of alu is
 signal reg1_sig : std_logic_vector (127 downto 0);  
 signal reg2_sig : std_logic_vector (127 downto 0);
 signal reg3_sig : std_logic_vector (127 downto 0);
-signal sel : std_logic_vector (24 downto 0);
 signal r : std_logic_vector(1 downto 0);  
 signal op : std_logic_vector(2 downto 0);
 signal test1: std_logic_vector(127 downto 0);
@@ -60,6 +59,7 @@ signal test3 :std_logic_vector(32 downto 0);		--for r4 000 - 011
 signal test4 :std_logic_vector(16 downto 0);
 begin  
 	process(reg1_sig, reg2_sig, reg3_sig, clk)
+	variable sel : std_logic_vector (24 downto 0);
 	variable temp : std_logic_vector (127 downto 0);
 	variable temp2 : std_logic_vector (127 downto 0);
 	variable temp_ext1: std_logic_vector(64 downto 0);
@@ -77,7 +77,7 @@ begin
 	reg1_sig <= reg1;
 	reg2_sig <= reg2;
 	reg3_sig <= reg3;
-	sel <= fwd;
+	sel := fwd;
 	if(slct = 1) then
 		reg1_sig <= regf;
 	elsif(slct = 2) then
