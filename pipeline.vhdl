@@ -36,9 +36,11 @@ entity pipeline is
 	i_id_ex3: in std_logic_vector(127 downto 0);
 	i_id_ex4: in integer;
 	i_id_ex5: in std_logic_vector(24 downto 0);
+	i_id_ex6: in std_logic_vector(24 downto 0);
 	i_ex_wb1: in std_logic_vector(127 downto 0);
 	i_ex_wb2: in integer;
 	i_ex_wb3: in std_logic_vector(24 downto 0);
+	i_ex_wb4: in std_logic_vector(24 downto 0);
 	
 	
 	o_if_d: out std_logic_vector(24 downto 0);
@@ -48,9 +50,11 @@ entity pipeline is
 	o_id_ex3: out std_logic_vector(127 downto 0);
 	o_id_ex4: out integer;
 	o_id_ex5: out std_logic_vector(24 downto 0);
+	o_id_ex6: out std_logic_vector(24 downto 0);
 	o_ex_wb1: out std_logic_vector(127 downto 0);
 	o_ex_wb2: out integer;
 	o_ex_wb3: out std_logic_vector(24 downto 0);
+	o_ex_wb4: out std_logic_vector(24 downto 0);
 	
 	clk: in std_logic
 	);
@@ -69,9 +73,11 @@ begin
 			o_id_ex3 <= i_id_ex3;
 			o_id_ex4 <= i_id_ex4;
 			o_id_ex5 <= i_id_ex5;
+			o_id_ex6 <= i_id_ex6;
 			o_ex_wb1 <= i_ex_wb1;
 			o_ex_wb2 <= i_ex_wb2;
 			o_ex_wb3 <= i_ex_wb3;
+			o_ex_wb4 <= i_ex_wb4;
 		end if;
 	end process;	
 end pipeline;
