@@ -193,9 +193,9 @@ begin
 		UUT3 : entity alu 
 		port map(
 		clk => clk,
-		reg1 => i_id_ex1,
-		reg2 => i_id_ex2,
-		reg3 => i_id_ex3,
+		reg1 => o_id_ex1,
+		reg2 => o_id_ex2,
+		reg3 => o_id_ex3,
 		output =>  i_ex_wb1,
 		fwd => o_id_ex6,
 		fwd_o => i_ex_wb3,
