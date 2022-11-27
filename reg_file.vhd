@@ -38,6 +38,7 @@ entity reg_file is
 	 
 	 fwd : in std_logic_vector(24 downto 0);
 	 fwd_o : out std_logic_vector(24 downto 0);
+	 fwd_o2 : out std_logic_vector(24 downto 0);
 	 
 	 write_o : out integer;
 	 
@@ -104,6 +105,7 @@ if(rising_edge(clk)) then
 		regs(write) <= write_reg;
 		
 		fwd_o <= fwd;
+		fwd_o2 <= sel;
 		--end if;	  
 	end if;
 	end process;
