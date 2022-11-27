@@ -129,6 +129,10 @@ begin
 			end if;
 			write(result_line, string'("PC: "));
 			write(result_line, PC);
+			write(result_line, string'(", opcode: "));
+			write(result_line, i_if_d);
+			write(result_line, string'(", current result output: "));
+			write(result_line, o_ex_wb1);
 			writeLine(results_file, result_line);
 			
 			PC <= PC + 1;
@@ -209,9 +213,9 @@ begin
 		UUT4: entity forwarding_unit
 		port map(
 		clk => clk,
-		curr_instr => o_ex_wb4,
-		prev_instr => o_ex_wb3,
-		new_data => o_ex_wb1,
+		curr_instr => i_ex_wb4,
+		prev_instr => i_ex_wb3,
+		new_data => i_ex_wb1,
 		fwd_data => fwd_data,
 		slct => slct
 		);
