@@ -34,14 +34,14 @@ entity reg_file is
 	 
 	 write_reg :in std_logic_vector (127 downto 0);
 	--take in 25 long what type it is li r3/4 read what reg file suppose to be  
-	sel : in std_logic_vector(24 downto 0);
+	sel : in std_logic_vector(24 downto 0); --curr instr
 	reg : in b;
 	 
 	 write : in integer;
 	 
-	 fwd : in std_logic_vector(24 downto 0);
-	 fwd_o : out std_logic_vector(24 downto 0);
-	 fwd_o2 : out std_logic_vector(24 downto 0);
+	 fwd : in std_logic_vector(24 downto 0); --prev instr
+	 fwd_o : out std_logic_vector(24 downto 0); --prev instr
+	 fwd_o2 : out std_logic_vector(24 downto 0); -- curr instr
 	 
 	 write_o : out integer;
 	 
@@ -98,12 +98,14 @@ if(rising_edge(clk)) then
 			
 			temp2 := to_integer(unsigned(sel(14 downto 10)));
 			output2 <= regs(temp2)(	127 downto 0);	 
-			
-		
+		end if;
+		temp4 := to_integer(unsigned(sel(4 downto 0)));
+		write_o <= temp4;	
+		if sel(24) = '0' then
+			output1 <= regs(temp4)(	127 downto 0);
 		end if;
 		
-		temp4 := to_integer(unsigned(sel(4 downto 0)));
-		write_o <= temp4;
+		
 		if  write >= 0 then	
 			regs(write) := write_reg;
 			--reg_o <= regs;
