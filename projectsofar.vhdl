@@ -38,8 +38,8 @@ entity alu is
 	 
 	 fwd : in std_logic_vector(24 downto 0); -- curr instr
 	 fwd2 : in std_logic_vector(24 downto 0); -- prev instr
-	 fwd_o : out std_logic_vector(24 downto 0);
-	 fwd_o2 : out std_logic_vector(24 downto 0);
+	 fwd_o : out std_logic_vector(24 downto 0); -- curr instr
+	 fwd_o2 : out std_logic_vector(24 downto 0); -- prev instr
 
 	 output : out std_logic_vector (127 downto 0);
 	 write_index: out integer
@@ -408,6 +408,7 @@ begin
 				output(127 downto 64) <= std_logic_vector(resize(signed(temp_ext1), 64));
 			end if;
 			
+			write_index <= to_integer(unsigned(fwd(4 downto 0)));
 		end if;--r4 end
 	
 		
@@ -840,7 +841,7 @@ begin
 				output(127 downto 112) <= std_logic_vector(resize(signed(temp_ext3), 16)) ;	
 			end if;
 			
-		 
+		 	write_index <= to_integer(unsigned(fwd(4 downto 0)));
 		end if; --r3 end  
 		
 	--load immediate
@@ -856,34 +857,36 @@ begin
 		-- 6789012345678901	       7
 		-- 2345678901234567		8
 		
+		temp := reg1;
 		if sel (23 downto 21 ) = "000" then 
-			output(15 downto 0)  <= sel (20 downto 5); 	 
+			temp(15 downto 0)  := sel (20 downto 5); 	 
 		-- 2nd 16
 		elsif sel (23 downto 21 ) = "001" then 	
-			output (31 downto 16) <= sel (20 downto 5); 	 
+			temp (31 downto 16) := sel (20 downto 5); 	 
 		--3rd 16
 		elsif sel (23 downto 21 ) = "010" then 
-			output (47 downto 32) <= sel (20 downto 5);	
+			temp (47 downto 32) := sel (20 downto 5);	
 		-- 4th 16
 		elsif sel (23 downto 21 ) = "011" then 
-			output (63 downto 48) <= sel (20 downto 5);	
+			temp (63 downto 48) := sel (20 downto 5);	
 		 --5th 16 
 		elsif sel (23 downto 21 ) = "100" then 	 
-			output 	(79 downto 64) <= sel (20 downto 5);
+			temp 	(79 downto 64) := sel (20 downto 5);
 		--6th 16 
 		elsif sel (23 downto 21 ) = "101" then 	  
-			output (95 downto 80) <= sel (20 downto 5);		
+			temp (95 downto 80) := sel (20 downto 5);		
 		--7th 16
 		elsif sel (23 downto 21 ) = "110" then 
-			output	(111 downto 96) <= sel (20 downto 5);
+			temp(111 downto 96) := sel (20 downto 5);
 		--8th 16 
 		elsif sel (23 downto 21) = "111" then 
-			output (127 downto 112) <= sel (20 downto 5);
+			temp(127 downto 112) := sel (20 downto 5);
 		end if;
+		output <= temp;
+		write_index <= to_integer(unsigned(fwd(4 downto 0)));
 	 end if;
 	 fwd_o <= fwd;
 	 fwd_o2 <= fwd2;
-	 write_index <= to_integer(unsigned(fwd(4 downto 0)));
 	 end if;
 	  end process;
 
