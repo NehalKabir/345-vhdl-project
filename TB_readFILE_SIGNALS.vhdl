@@ -193,10 +193,12 @@ begin
 	clock_gen : process
 	begin
 		clk <= '0';
+		PC <= 0;
 		wait for clk_period/2;
 		loop	-- inifinite loop
 			clk <= not clk;
 			wait for clk_period/2;
+				PC <= PC + 1;
 		end loop;
 		std.env.finish;
 	end process;
